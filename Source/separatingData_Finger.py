@@ -20,14 +20,22 @@ indexDirection = dataindex['Direction'].tolist()
 
 length = len(thumbData)
 lenDir = len(thumbDirection)
-#dataLen = length/4
+
+# thumb Finger Position and Direction Axes Initialization
 thumbX_axis = np.transpose(np.zeros(length))
 thumbY_axis = np.transpose(np.zeros(length))
 thumbZ_axis = np.transpose(np.zeros(length))
-
 thumbDirectionX_axis = np.transpose(np.zeros(length))
 thumbDirectionY_axis = np.transpose(np.zeros(length))
 thumbDirectionZ_axis = np.transpose(np.zeros(length))
+
+#Index Finger Position and Direction Axes Initialization
+indexX_axis = np.transpose(np.zeros(length))
+indexY_axis = np.transpose(np.zeros(length))
+indexZ_axis = np.transpose(np.zeros(length))
+indexDirectionX_axis = np.transpose(np.zeros(length))
+indexDirectionY_axis = np.transpose(np.zeros(length))
+indexDirectionZ_axis = np.transpose(np.zeros(length))
 
 
 # Separating the values from the str to array of separate X,Y,Z values
@@ -51,6 +59,27 @@ for j in range(lenDir):
     thumbDirectionY_axis[j] = thumbDirection_ex[1]
     thumbDirectionZ_axis[j] = thumbDirection_ex[2]
 
+
+# Separating the values from the str to array of separate X,Y,Z values
+for i in range(length):
+    a = indexData[i]
+    a = a[1: -1]
+    indexData[i] = a
+    b = list(a.split(","))
+    indexData_ex = list(indexData[i].split(","))
+    indexX_axis[i] = indexData_ex[0]
+    indexY_axis[i] = indexData_ex[1]
+    indexZ_axis[i] = indexData_ex[2]
+   
+for j in range(lenDir):
+    c = indexDirection[j]
+    c = c[1: -1]
+    indexDirection[j] = c
+    d = list(c.split(","))
+    indexDirection_ex = list(indexDirection[j].split(","))
+    indexDirectionX_axis[j] = indexDirection_ex[0]
+    indexDirectionY_axis[j] = indexDirection_ex[1]
+    indexDirectionZ_axis[j] = indexDirection_ex[2]
 size = int(thumbX_axis.shape[0])
 length1 = size/4
 
@@ -100,6 +129,55 @@ thumbDistal = np.hstack((thumbDistalX_axis, thumbDistalY_axis,thumbDistalZ_axis)
 thumbDistalDirection = np.hstack((thumbDistDirectionX_axis, thumbDistDirectionY_axis, thumbDistDirectionZ_axis))
 
 
+size = int(indexX_axis.shape[0])
+length1 = size/4
+
+
+#getting the metacarpal direction an start position values for the index
+indexMetacarpalX_axis = sum(indexX_axis[0:length1])/length1
+indexMetacarpalY_axis = sum(indexY_axis[0:length1])/length1
+indexMetacarpalZ_axis = sum(indexZ_axis[0:length1])/length1
+indexMetaDirectionX_axis = sum(indexDirectionX_axis[0:length1])/length1
+indexMetaDirectionY_axis = sum(indexDirectionY_axis[0:length1])/length1
+indexMetaDirectionZ_axis = sum(indexDirectionZ_axis[0:length1])/length1
+indexMetacarpal = np.hstack((indexMetacarpalX_axis,indexMetacarpalY_axis, indexMetacarpalZ_axis))
+indexMetacarpalDirection = np.hstack((indexMetaDirectionX_axis,indexMetaDirectionY_axis,indexMetaDirectionZ_axis))
+
+
+# Getting the Proximal Bone position and Direction Values for the index
+indexProximalX_axis = sum(indexX_axis[length1:(2*length1)])/length1
+indexProximalY_axis = sum(indexY_axis[length1:(2*length1)])/length1
+indexProximalZ_axis = sum(indexZ_axis[length1:(2*length1)])/length1
+indexProxDirectionX_axis = sum(indexDirectionX_axis[length1:(2*length1)])/length1
+indexProxDirectionY_axis = sum(indexDirectionY_axis[length1:(2*length1)])/length1
+indexProxDirectionZ_axis = sum(indexDirectionZ_axis[length1:(2*length1)])/length1
+indexProximal = np.hstack((indexProximalX_axis,indexProximalY_axis, indexProximalZ_axis))
+indexProximalDirection = np.hstack((indexProxDirectionX_axis,indexProxDirectionY_axis,indexProxDirectionZ_axis))
+
+
+# Getting the Intermediate Bone Position and Direction Values for the index
+indexInterX_axis = sum(indexX_axis[(2*length1):(3*length1)])/length1
+indexInterY_axis = sum(indexY_axis[(2*length1):(3*length1)])/length1
+indexInterZ_axis = sum(indexZ_axis[(2*length1):(3*length1)])/length1
+indexInterDirectionX_axis = sum(indexDirectionX_axis[(2*length1):(3*length1)])/length1
+indexInterDirectionY_axis = sum(indexDirectionY_axis[(2*length1):(3*length1)])/length1
+indexInterDirectionZ_axis = sum(indexDirectionZ_axis[(2*length1):(3*length1)])/length1
+indexInter = np.hstack((indexInterX_axis, indexInterY_axis, indexInterZ_axis))
+indexIntermediateDirection = np.hstack((indexInterDirectionX_axis,indexInterDirectionY_axis,indexInterDirectionZ_axis))
+
+
+
+# Getting the Distal Bone Position and Direction Values or the index
+indexDistalX_axis = sum(indexX_axis[(3*length1):size])/length1
+indexDistalY_axis = sum(indexY_axis[(3*length1):size])/length1
+indexDistalZ_axis = sum(indexZ_axis[(3*length1):size])/length1
+indexDistDirectionX_axis = sum(indexDirectionX_axis[-3:])/length1
+indexDistDirectionY_axis = sum(indexDirectionY_axis[-3:])/length1
+indexDistDirectionZ_axis = sum(indexDirectionZ_axis[-3:])/length1
+indexDistal = np.hstack((indexDistalX_axis, indexDistalY_axis,indexDistalZ_axis))
+indexDistalDirection = np.hstack((indexDistDirectionX_axis, indexDistDirectionY_axis, indexDistDirectionZ_axis))
+
+
 palmPos = pd.read_csv("C:\\Users\\as7933\\Desktop\\Grad_Project\\Source\\Data\\palm_position.csv")
 posValue = palmPos['0'].tolist()
 posLength = len(posValue)   
@@ -122,6 +200,16 @@ posY_axis = sum(posValueY_axis[0:posLength])/posLength
 posZ_axis = sum(posValueZ_axis[0:posLength])/posLength
 pos = np.hstack((posX_axis, posY_axis, posZ_axis))
 
+# Computing the Euclidean Distance between the Palm and the Thumb Bones
+palmThumbMetadist = np.linalg.norm(thumbMetacarpal - pos)
+palmThumbProxidist = np.linalg.norm(thumbProximal - pos)
+palmThumbInterdist = np.linalg.norm(thumbInter - pos)
+palmThumbDistdist = np.linalg.norm(thumbDistal - pos)
 
+# Computing the Euclidean Distance between the Palm and the Index Finger Bones
+palmIndexMetadist = np.linalg.norm(indexMetacarpal - pos)
+palmIndexProxidist = np.linalg.norm(indexProximal - pos)
+palmIndexInterdist = np.linalg.norm(indexInter - pos)
+palmIndexDistdist = np.linalg.norm(indexDistal - pos)
 
 

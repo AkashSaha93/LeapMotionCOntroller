@@ -497,7 +497,29 @@ palmPinkyDistdist = np.linalg.norm(pinkyDistal - pos)
 
 
 
+#####################################################################################################################
+# RESPECTIVE BONE DISTANCE OF EACH 
+#####################################################################################################################
 
+thumbIndexMeta = np.linalg.norm(indexMetacarpal - thumbMetacarpal)
+thumbRingMeta = np.linalg.norm(ringMetacarpal - thumbMetacarpal)
+thumbMiddleMeta = np.linalg.norm(middleMetacarpal - thumbMetacarpal)
+thumbPinkyMeta = np.linalg.norm(pinkyMetacarpal - thumbMetacarpal)
+
+thumbIndexProximal = np.linalg.norm(indexProximal - thumbProximal)
+thumbMiddleProximal = np.linalg.norm(middleProximal - thumbProximal)
+thumbRingProximal = np.linalg.norm(ringProximal - thumbProximal)
+thumbPinkyProximal = np.linalg.norm(pinkyProximal - thumbProximal)
+
+thumbIndexInter = np.linalg.norm(indexInter - thumbInter)
+thumbMiddleInter = np.linalg.norm(middleInter - thumbInter)
+thumbRingInter = np.linalg.norm(ringInter - thumbInter)
+thumbPinkyInter = np.linalg.norm(pinkyInter - thumbInter)
+
+thumbIndexDistal = np.linalg.norm(indexDistal - thumbDistal)
+thumbMiddleDistal = np.linalg.norm(middleDistal - thumbDistal)
+thumbRingDistal = np.linalg.norm(ringDistal - thumbDistal)
+thumbPinkyDistal = np.linalg.norm(pinkyDistal - thumbDistal)
 
 
 

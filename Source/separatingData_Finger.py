@@ -100,4 +100,28 @@ thumbDistal = np.hstack((thumbDistalX_axis, thumbDistalY_axis,thumbDistalZ_axis)
 thumbDistalDirection = np.hstack((thumbDistDirectionX_axis, thumbDistDirectionY_axis, thumbDistDirectionZ_axis))
 
 
-#palmPos = pd.read_csv("C:\\Users\\as7933\\Desktop\\Grad_Project\\Source\\Data\\palm_position.csv")
+palmPos = pd.read_csv("C:\\Users\\as7933\\Desktop\\Grad_Project\\Source\\Data\\palm_position.csv")
+posValue = palmPos['0'].tolist()
+posLength = len(posValue)   
+posValueX_axis = np.transpose(np.zeros(posLength))
+posValueY_axis = np.transpose(np.zeros(posLength))
+posValueZ_axis = np.transpose(np.zeros(posLength))
+
+for k in range(posLength):
+    c = posValue[k]
+    c = c[1: -1]
+    posValue[k] = c
+    d = list(c.split(","))
+    posValue_ex = list(posValue[k].split(","))
+    posValueX_axis[k] = posValue_ex[0]
+    posValueY_axis[k] = posValue_ex[1]
+    posValueZ_axis[k] = posValue_ex[2]
+    
+posX_axis = sum(posValueX_axis[0:posLength])/posLength
+posY_axis = sum(posValueY_axis[0:posLength])/posLength
+posZ_axis = sum(posValueZ_axis[0:posLength])/posLength
+pos = np.hstack((posX_axis, posY_axis, posZ_axis))
+
+
+
+

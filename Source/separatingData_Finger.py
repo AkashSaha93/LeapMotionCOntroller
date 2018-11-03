@@ -31,18 +31,6 @@ posZ_axis = sum(posValueZ_axis[0:posLength])/posLength
 pos = np.hstack((posX_axis, posY_axis, posZ_axis))
 
 
-
-
-
-
-
-
-
-
-
-
-
-    
 ###############################################################################################
 # THUMB FINGER
 ###############################################################################################
@@ -128,9 +116,9 @@ thumbDistal = np.hstack((thumbDistalX_axis, thumbDistalY_axis,thumbDistalZ_axis)
 thumbDistalDirection = np.hstack((thumbDistDirectionX_axis, thumbDistDirectionY_axis, thumbDistDirectionZ_axis))
 
 # Computing the Euclidean Distance between the Palm and the Thumb Bones
-palmThumbMetadist = np.linalg.norm(thumbMetacarpal - pos)
-palmThumbProxidist = np.linalg.norm(thumbProximal - pos)
-palmThumbInterdist = np.linalg.norm(thumbInter - pos)
+#palmThumbMetadist = np.linalg.norm(thumbMetacarpal - pos)
+#palmThumbProxidist = np.linalg.norm(thumbProximal - pos)
+#palmThumbInterdist = np.linalg.norm(thumbInter - pos)
 palmThumbDistdist = np.linalg.norm(thumbDistal - pos)
 
 
@@ -218,9 +206,9 @@ indexDistal = np.hstack((indexDistalX_axis, indexDistalY_axis,indexDistalZ_axis)
 indexDistalDirection = np.hstack((indexDistDirectionX_axis, indexDistDirectionY_axis, indexDistDirectionZ_axis))
 
 # Computing the Euclidean Distance between the Palm and the Index Finger Bones
-palmIndexMetadist = np.linalg.norm(indexMetacarpal - pos)
-palmIndexProxidist = np.linalg.norm(indexProximal - pos)
-palmIndexInterdist = np.linalg.norm(indexInter - pos)
+#palmIndexMetadist = np.linalg.norm(indexMetacarpal - pos)
+#palmIndexProxidist = np.linalg.norm(indexProximal - pos)
+#palmIndexInterdist = np.linalg.norm(indexInter - pos)
 palmIndexDistdist = np.linalg.norm(indexDistal - pos)
 
 
@@ -309,9 +297,9 @@ middleDistal = np.hstack((middleDistalX_axis, middleDistalY_axis,middleDistalZ_a
 middleDistalDirection = np.hstack((middleDistDirectionX_axis, middleDistDirectionY_axis, middleDistDirectionZ_axis))
 
 # Computing the Euclidean Distance between the Palm and the middle Finger Bones
-palmMiddleMetadist = np.linalg.norm(middleMetacarpal - pos)
-palmMiddleProxidist = np.linalg.norm(middleProximal - pos)
-palmMiddleInterdist = np.linalg.norm(middleInter - pos)
+#palmMiddleMetadist = np.linalg.norm(middleMetacarpal - pos)
+#palmMiddleProxidist = np.linalg.norm(middleProximal - pos)
+#palmMiddleInterdist = np.linalg.norm(middleInter - pos)
 palmMiddleDistdist = np.linalg.norm(middleDistal - pos)
 
 
@@ -403,10 +391,10 @@ ringDistal = np.hstack((ringDistalX_axis, ringDistalY_axis,ringDistalZ_axis))
 ringDistalDirection = np.hstack((ringDistDirectionX_axis, ringDistDirectionY_axis, ringDistDirectionZ_axis))
 
 # Computing the Euclidean Distance between the Palm and the ring Finger Bones
-palmringMetadist = np.linalg.norm(ringMetacarpal - pos)
-palmringProxidist = np.linalg.norm(ringProximal - pos)
-palmringInterdist = np.linalg.norm(ringInter - pos)
-palmringDistdist = np.linalg.norm(ringDistal - pos)
+#palmringMetadist = np.linalg.norm(ringMetacarpal - pos)
+#palmringProxidist = np.linalg.norm(ringProximal - pos)
+#palmringInterdist = np.linalg.norm(ringInter - pos)
+palmRingDistdist = np.linalg.norm(ringDistal - pos)
 
 ###############################################################################################
 # PINKY FINGER
@@ -489,9 +477,9 @@ pinkyDistal = np.hstack((pinkyDistalX_axis, pinkyDistalY_axis,pinkyDistalZ_axis)
 pinkyDistalDirection = np.hstack((pinkyDistDirectionX_axis, pinkyDistDirectionY_axis, pinkyDistDirectionZ_axis))
 
 # Computing the Euclidean Distance between the Palm and the pinky Finger Bones
-palmPinkyMetadist = np.linalg.norm(pinkyMetacarpal - pos)
-palmPinkyProxidist = np.linalg.norm(pinkyProximal - pos)
-palmPinkyInterdist = np.linalg.norm(pinkyInter - pos)
+#palmPinkyMetadist = np.linalg.norm(pinkyMetacarpal - pos)
+#palmPinkyProxidist = np.linalg.norm(pinkyProximal - pos)
+#palmPinkyInterdist = np.linalg.norm(pinkyInter - pos)
 palmPinkyDistdist = np.linalg.norm(pinkyDistal - pos)
 
 
@@ -521,8 +509,47 @@ thumbMiddleDistal = np.linalg.norm(middleDistal - thumbDistal)
 thumbRingDistal = np.linalg.norm(ringDistal - thumbDistal)
 thumbPinkyDistal = np.linalg.norm(pinkyDistal - thumbDistal)
 
+indexMiddleMeta = np.linalg.norm(middleMetacarpal - indexMetacarpal)
+indexRingMeta = np.linalg.norm(ringMetacarpal - indexMetacarpal)
+indexPinkyMeta = np.linalg.norm(pinkyMetacarpal - indexMetacarpal)
 
+indexMiddleProximal = np.linalg.norm(middleProximal - indexProximal)
+indexRingProximal = np.linalg.norm(ringProximal - indexProximal)
+indexPinkyProximal = np.linalg.norm(pinkyProximal - indexProximal)
 
+indexMiddleInter = np.linalg.norm(middleInter - indexInter)
+indexRingInter = np.linalg.norm(ringInter - indexInter)
+indexPinkyInter = np.linalg.norm(pinkyInter - indexInter)
 
+indexMiddleDistal = np.linalg.norm(middleDistal - indexDistal)
+indexRingDistal = np.linalg.norm(ringDistal - indexDistal)
+indexPinkyDistal = np.linalg.norm(pinkyDistal - indexDistal)
 
+middleRingMeta = np.linalg.norm(ringMetacarpal - middleMetacarpal)
+middlePinkyMeta = np.linalg.norm(pinkyMetacarpal - middleMetacarpal)
 
+middleRingProximal = np.linalg.norm(ringProximal - middleProximal)
+middlePinkyProximal = np.linalg.norm(pinkyProximal - middleProximal)
+
+middleRingInter = np.linalg.norm(ringInter - middleInter)
+middlePinkyInter = np.linalg.norm(pinkyInter - middleInter)
+
+middleRingDistal = np.linalg.norm(ringDistal - middleDistal)
+middlePinkyDistal = np.linalg.norm(pinkyDistal - middleDistal)
+
+ringPinkyMeta = np.linalg.norm(pinkyMetacarpal - ringMetacarpal)
+
+ringPinkyProximal = np.linalg.norm(pinkyProximal - ringProximal)
+
+ringPinkyInter = np.linalg.norm(pinkyProximal - ringProximal)
+
+ringPinkyDistal = np.linalg.norm(pinkyDistal - ringDistal)
+
+#####################################################################################################################
+# Eucledian Distace from Point 4
+#####################################################################################################################
+
+eucledianThumb = palmThumbDistdist / palmMiddleDistdist
+eucledainIndex = palmIndexDistdist / palmMiddleDistdist
+eucledianMiddle = palmMiddleDistdist / palmMiddleDistdist
+eucledianRing = palmRingDistdist / palmMiddleDistdist

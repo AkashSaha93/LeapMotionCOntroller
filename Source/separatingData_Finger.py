@@ -8,6 +8,10 @@ Created on Mon Oct 29 13:22:03 2018
 import pandas as pd
 import numpy as np
 
+###############################################################################################
+# Palm Position
+###############################################################################################
+
 palmPos = pd.read_csv("C:\\Users\\as7933\\Desktop\\Grad_Project\\Source\\Data\\palm_position.csv")
 posValue = palmPos['0'].tolist()
 posLength = len(posValue)   
@@ -29,6 +33,35 @@ posX_axis = sum(posValueX_axis[0:posLength])/posLength
 posY_axis = sum(posValueY_axis[0:posLength])/posLength
 posZ_axis = sum(posValueZ_axis[0:posLength])/posLength
 pos = np.hstack((posX_axis, posY_axis, posZ_axis))
+
+
+
+###############################################################################################
+# Palm Direction
+###############################################################################################
+
+palmDir = pd.read_csv("C:\\Users\\as7933\\Desktop\\Grad_Project\\Source\\Data\\palm_direction.csv")
+dirValue = palmDir['0'].tolist()
+dirLength = len(dirValue)   
+dirValueX_axis = np.transpose(np.zeros(posLength))
+dirValueY_axis = np.transpose(np.zeros(posLength))
+dirValueZ_axis = np.transpose(np.zeros(posLength))
+
+for k in range(dirLength):
+    c = dirValue[k]
+    c = c[1: -1]
+    dirValue[k] = c
+    d = list(c.split(","))
+    dirValue_ex = list(dirValue[k].split(","))
+    dirValueX_axis[k] = dirValue_ex[0]
+    dirValueY_axis[k] = dirValue_ex[1]
+    dirValueZ_axis[k] = dirValue_ex[2]
+    
+dirX_axis = sum(dirValueX_axis[0:dirLength])/dirLength
+dirY_axis = sum(dirValueY_axis[0:dirLength])/dirLength
+dirZ_axis = sum(dirValueZ_axis[0:dirLength])/dirLength
+direction = np.hstack((dirX_axis, dirY_axis, dirZ_axis))
+
 
 
 ###############################################################################################
@@ -116,9 +149,6 @@ thumbDistal = np.hstack((thumbDistalX_axis, thumbDistalY_axis,thumbDistalZ_axis)
 thumbDistalDirection = np.hstack((thumbDistDirectionX_axis, thumbDistDirectionY_axis, thumbDistDirectionZ_axis))
 
 # Computing the Euclidean Distance between the Palm and the Thumb Bones
-#palmThumbMetadist = np.linalg.norm(thumbMetacarpal - pos)
-#palmThumbProxidist = np.linalg.norm(thumbProximal - pos)
-#palmThumbInterdist = np.linalg.norm(thumbInter - pos)
 palmThumbDistdist = np.linalg.norm(thumbDistal - pos)
 
 
@@ -206,9 +236,6 @@ indexDistal = np.hstack((indexDistalX_axis, indexDistalY_axis,indexDistalZ_axis)
 indexDistalDirection = np.hstack((indexDistDirectionX_axis, indexDistDirectionY_axis, indexDistDirectionZ_axis))
 
 # Computing the Euclidean Distance between the Palm and the Index Finger Bones
-#palmIndexMetadist = np.linalg.norm(indexMetacarpal - pos)
-#palmIndexProxidist = np.linalg.norm(indexProximal - pos)
-#palmIndexInterdist = np.linalg.norm(indexInter - pos)
 palmIndexDistdist = np.linalg.norm(indexDistal - pos)
 
 
@@ -297,9 +324,6 @@ middleDistal = np.hstack((middleDistalX_axis, middleDistalY_axis,middleDistalZ_a
 middleDistalDirection = np.hstack((middleDistDirectionX_axis, middleDistDirectionY_axis, middleDistDirectionZ_axis))
 
 # Computing the Euclidean Distance between the Palm and the middle Finger Bones
-#palmMiddleMetadist = np.linalg.norm(middleMetacarpal - pos)
-#palmMiddleProxidist = np.linalg.norm(middleProximal - pos)
-#palmMiddleInterdist = np.linalg.norm(middleInter - pos)
 palmMiddleDistdist = np.linalg.norm(middleDistal - pos)
 
 
@@ -391,9 +415,6 @@ ringDistal = np.hstack((ringDistalX_axis, ringDistalY_axis,ringDistalZ_axis))
 ringDistalDirection = np.hstack((ringDistDirectionX_axis, ringDistDirectionY_axis, ringDistDirectionZ_axis))
 
 # Computing the Euclidean Distance between the Palm and the ring Finger Bones
-#palmringMetadist = np.linalg.norm(ringMetacarpal - pos)
-#palmringProxidist = np.linalg.norm(ringProximal - pos)
-#palmringInterdist = np.linalg.norm(ringInter - pos)
 palmRingDistdist = np.linalg.norm(ringDistal - pos)
 
 ###############################################################################################
@@ -477,9 +498,7 @@ pinkyDistal = np.hstack((pinkyDistalX_axis, pinkyDistalY_axis,pinkyDistalZ_axis)
 pinkyDistalDirection = np.hstack((pinkyDistDirectionX_axis, pinkyDistDirectionY_axis, pinkyDistDirectionZ_axis))
 
 # Computing the Euclidean Distance between the Palm and the pinky Finger Bones
-#palmPinkyMetadist = np.linalg.norm(pinkyMetacarpal - pos)
-#palmPinkyProxidist = np.linalg.norm(pinkyProximal - pos)
-#palmPinkyInterdist = np.linalg.norm(pinkyInter - pos)
+
 palmPinkyDistdist = np.linalg.norm(pinkyDistal - pos)
 
 
@@ -553,3 +572,92 @@ eucledianThumb = palmThumbDistdist / palmMiddleDistdist
 eucledainIndex = palmIndexDistdist / palmMiddleDistdist
 eucledianMiddle = palmMiddleDistdist / palmMiddleDistdist
 eucledianRing = palmRingDistdist / palmMiddleDistdist
+euclediamPinky = palmPinkyDistdist / palmMiddleDistdist
+
+#####################################################################################################################
+# finger tip angle from Point 5
+#####################################################################################################################
+
+
+thumbCos = np.dot(thumbDistalDirection, direction)
+thumbSin = np.linalg.norm(np.cross(thumbDistalDirection, direction))
+thumbAngle = np.arctan2(thumbSin,thumbCos)
+
+indexCos = np.dot(indexDistalDirection, direction)
+indexSin = np.linalg.norm(np.cross(indexDistalDirection, direction))
+indexAngle = np.arctan2(indexSin,indexCos)
+
+middleCos = np.dot(middleDistalDirection, direction)
+middleSin = np.linalg.norm(np.cross(middleDistalDirection, direction))
+middleAngle = np.arctan2(middleSin,middleCos)
+
+ringCos = np.dot(ringDistalDirection, direction)
+ringSin = np.linalg.norm(np.cross(ringDistalDirection, direction))
+ringAngle = np.arctan2(ringSin,ringCos)
+
+pinkyCos = np.dot(pinkyDistalDirection, direction)
+pinkySin = np.linalg.norm(np.cross(pinkyDistalDirection, direction))
+pinkyAngle = np.arctan2(pinkySin,pinkyCos)
+
+
+#####################################################################################################################
+# finger tip angle from Point 7
+#####################################################################################################################
+
+thumbIndexCos = np.dot(thumbDistalDirection, indexDistalDirection)
+thumbIndexSin = np.linalg.norm(np.cross(thumbDistalDirection, indexDistalDirection))
+thumbIndexAngle = np.arctan2(thumbIndexSin, thumbIndexCos)
+
+thumbMiddleCos = np.dot(thumbDistalDirection, middleDistalDirection)
+thumbMiddleSin = np.linalg.norm(np.cross(thumbDistalDirection, middleDistalDirection))
+thumbMiddleAngle = np.arctan2(thumbMiddleSin, thumbMiddleCos)
+
+thumbRingCos = np.dot(thumbDistalDirection, ringDistalDirection)
+thumbRingSin = np.linalg.norm(np.cross(thumbDistalDirection, ringDistalDirection))
+thumbRingAngle = np.arctan2(thumbRingSin, thumbRingCos)
+
+thumbPinkyCos = np.dot(thumbDistalDirection, pinkyDistalDirection)
+thumbPinkySin = np.linalg.norm(np.cross(thumbDistalDirection, pinkyDistalDirection))
+thumbPinkyAngle = np.arctan2(thumbPinkySin, thumbPinkyCos)
+
+indexMiddleCos = np.dot(indexDistalDirection, middleDistalDirection)
+indexMiddleSin = np.linalg.norm(np.cross(indexDistalDirection, middleDistalDirection))
+indexMiddleAngle = np.arctan2(indexMiddleSin, indexMiddleCos)
+
+indexRingCos = np.dot(indexDistalDirection, ringDistalDirection)
+indexRingSin = np.linalg.norm(np.cross(indexDistalDirection, ringDistalDirection))
+indexRingAngle = np.arctan2(indexRingSin, indexRingCos)
+
+indexPinkyCos = np.dot(indexDistalDirection, pinkyDistalDirection)
+indexPinkySin = np.linalg.norm(np.cross(indexDistalDirection, pinkyDistalDirection))
+indexPinkyAngle = np.arctan2(indexPinkySin, indexPinkyCos)
+
+middleRingCos = np.dot(middleDistalDirection, ringDistalDirection)
+middleRingSin = np.linalg.norm(np.cross(middleDistalDirection, ringDistalDirection))
+middleRingAngle = np.arctan2(middleRingSin, middleRingCos)
+
+middlePinkyCos = np.dot(middleDistalDirection, pinkyDistalDirection)
+middlePinkySin = np.linalg.norm(np.cross(middleDistalDirection, pinkyDistalDirection))
+middlePinkyAngle = np.arctan2(middlePinkySin, middlePinkyCos)
+
+ringPinkyCos = np.dot(ringDistalDirection, pinkyDistalDirection)
+ringPinkySin = np.linalg.norm(np.cross(ringDistalDirection, pinkyDistalDirection))
+ringPinkyAngle = np.arctan2(ringPinkySin,ringPinkyCos)
+
+
+finger_features = np.hstack((pos,direction,thumbMetacarpal, thumbProximal, thumbInter, thumbDistal, indexMetacarpal, indexProximal, indexInter,
+                             indexDistal, middleMetacarpal, middleProximal, middleInter, middleDistal, ringMetacarpal, ringProximal, ringInter, ringDistal,
+                             pinkyMetacarpal, pinkyProximal, pinkyInter, pinkyDistal,thumbIndexMeta,thumbIndexProximal, thumbIndexInter, thumbIndexDistal,
+                             thumbMiddleMeta, thumbMiddleProximal,thumbMiddleInter, thumbMiddleDistal, thumbRingMeta, thumbRingInter, thumbRingDistal,
+                             indexMiddleMeta, indexMiddleProximal, indexMiddleInter, indexMiddleDistal, indexRingMeta, indexRingInter,
+                             indexPinkyMeta, indexPinkyProximal, indexPinkyInter, indexPinkyDistal, middleRingMeta, middleRingProximal, middleRingInter,
+                             middleRingDistal, middlePinkyMeta, middlePinkyProximal, middlePinkyInter, middlePinkyDistal,ringPinkyMeta, ringPinkyProximal,
+                             ringPinkyInter, ringPinkyDistal,eucledianThumb, eucledainIndex, eucledianMiddle, eucledianRing, euclediamPinky, thumbAngle,
+                             indexAngle, middleAngle, ringAngle, pinkyAngle,thumbIndexAngle, thumbMiddleAngle, thumbRingAngle, thumbPinkyAngle,
+                             indexMiddleAngle, indexRingAngle, indexPinkyAngle, middleRingAngle, middlePinkyAngle, ringPinkyAngle))
+
+
+
+
+
+

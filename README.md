@@ -1,1 +1,1 @@
-# LeapMotionCOntroller
+# Leap Motion Controller
